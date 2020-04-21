@@ -43,7 +43,11 @@ def add_choice(request, question_id):
 
 
 def remove_choice(request, question_id, choice_id):
-    return HttpResponse(f"question number {question_id}, choice number{choice_id}")
+    question = get_object_or_404(Question, pk=question_id)
+    selected_choice = question.choice_set.get(pk=choice_id)
+    deleted_choice = selected_choice.delete()
+    #deleted_choice.save()
+    return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
 
 
 
