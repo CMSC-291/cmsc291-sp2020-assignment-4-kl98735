@@ -15,8 +15,10 @@
     <input type="text" value="" name="question_text">
     <input type="submit" value="Create!">
 </form>
-
-
-
-
-    
+{% for i in question %}
+    <form action="{% url 'polls:remove_remove question' question.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value= "Remove!">
+    </form>
+{% endfor %}
+</form>

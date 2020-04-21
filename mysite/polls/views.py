@@ -26,6 +26,7 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+
 def add_question(request):
     question_text = request.POST['question_text']
     question = Question(question_text=question_text, pub_date=timezone.now())
@@ -39,6 +40,11 @@ def add_choice(request, question_id):
     choice = q.choice_set.create(choice_text=choice_text, votes=0)
     choice.save()
     return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
+
+
+def remove_choice(request, question_id, choice_id):
+    return HttpResponse(f"question number {question_id}, choice number{choice_id}")
+
 
 
 def vote(request, question_id):
