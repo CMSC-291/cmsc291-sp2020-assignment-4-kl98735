@@ -1,4 +1,6 @@
-from django.http import HttpResponseRedirect
+from django.utils import timezone
+
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -23,6 +25,21 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+def add_question(request):
+    question_text = request.POST['question_text']
+    question = Question(question_text=question_text, pub_date=timezone.now())
+    question.save()
+    return HttpResponseRedirect(reverse('polls:index'))
+
+
+def add_choice(request, question_id):
+    choice_text = request.POST['choice_text']
+    q = Question.objects.get(pk=question_id)
+    choice = q.choice_set.create(choice_text=choice_text, votes=0)
+    choice.save()
+    return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
+
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
