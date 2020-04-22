@@ -11,5 +11,6 @@ urlpatterns = [
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('<int:question_id>/add_choice/', views.add_choice, name='add_choice'),
     path('<int:question_id>/remove_choice/<int:choice_id>', views.remove_choice, name='remove_choice'),
+    path('<int:question_id>/remove_question/', views.remove_question, name='remove_question')
 
 ]

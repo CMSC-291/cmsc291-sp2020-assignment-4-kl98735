@@ -46,8 +46,13 @@ def remove_choice(request, question_id, choice_id):
     question = get_object_or_404(Question, pk=question_id)
     selected_choice = question.choice_set.get(pk=choice_id)
     deleted_choice = selected_choice.delete()
-    #deleted_choice.save()
-    return HttpResponseRedirect(reverse('polls:detail', args=(question_id,)))
+    deleted_choice.save()
+    return HttpResponseRedirect(reverse('polls:detail', args=(question_id)))
+
+def remove_question(request, question_id):
+    q = Question.objects.get(pk=question_id)
+    deleted_question = q.delete()
+    return HttpResponseRedirect(reverse('polls:index'))
 
 
 

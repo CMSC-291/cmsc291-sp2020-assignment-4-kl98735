@@ -5,20 +5,19 @@
     <ul>
     {% for question in latest_question_list %}
         <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+        <form action="{% url 'polls:remove_question' question.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value= "Remove!"> <br>
+        </form>
     {% endfor %}
     </ul>
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
 <form action="{% url 'polls:add_question' %}" method="post">
     {% csrf_token %}
     <input type="text" value="" name="question_text">
     <input type="submit" value="Create!">
 </form>
-{% for i in question %}
-    <form action="{% url 'polls:remove_remove question' question.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value= "Remove!">
-    </form>
-{% endfor %}
-</form>
+
